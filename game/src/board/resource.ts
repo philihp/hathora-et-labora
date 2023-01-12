@@ -1,5 +1,5 @@
 import { match, P } from 'ts-pattern'
-import { Cost, ResourceEnum } from '../types'
+import { Cost, GameStatePlaying, ResourceEnum, Tableau } from '../types'
 
 const ResourceValues = Object.values(ResourceEnum)
 
@@ -49,3 +49,10 @@ export const parseResourceParam: (p?: string) => Cost = (p) => {
   }
   return cost
 }
+
+export const costEnergy = ({ coal = 0, peat = 0, wood = 0, straw = 0 }) => coal * 3 + peat * 2 + wood + straw * 0.5
+
+export const canAfford =
+  (cost: Cost) =>
+  (player: Tableau): boolean =>
+    Object.entries(cost).every(([type, amountNeeded]) => player[type as keyof Tableau] >= amountNeeded)
