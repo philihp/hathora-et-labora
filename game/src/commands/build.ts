@@ -1,6 +1,7 @@
 import { pipe } from 'ramda'
 import { costForBuilding, isCloisterBuilding, terrainForBuilding } from '../board/buildings'
 import { getPlayer, setPlayer } from '../board/player'
+import { canAfford } from '../board/resource'
 import { BuildingEnum, GameCommandBuildParams, GameStatePlaying, Tableau, Tile } from '../types'
 
 const checkBuildingUnbuilt =
@@ -23,12 +24,7 @@ const checkLandTypeMatches =
 const checkPlayerHasBuildingCost =
   (building: BuildingEnum) =>
   (state: GameStatePlaying | undefined): GameStatePlaying | undefined =>
-    state &&
-    Object.entries(costForBuilding(building)).every(
-      ([type, amountNeeded]) => getPlayer(state)[type as keyof Tableau] >= amountNeeded
-    )
-      ? state
-      : undefined
+    state && canAfford(costForBuilding(building))(getPlayer(state)) ? state : undefined
 
 const checkBuildingCloister =
   (row: number, col: number, building: BuildingEnum) =>
