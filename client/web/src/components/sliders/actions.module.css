@@ -2,15 +2,14 @@
   flex: 1 1 0;
   background-color: white;
   border-radius: 4px;
-  border: 1px solid #ddd;
+  border-width: 0;
   margin: 5px;
   max-width: 100px;
 }
-.action:active:enabled {
-  background-color: #f2f2f2;
-}
+
 .action:disabled {
   cursor: auto;
+  opacity: 0.6;
 }
 
 .container {
@@ -38,8 +37,14 @@
   border-width: 1px;
   border-top-width: 0;
   border-style: solid;
-  border-color: rgba(255, 255, 255, 0.21);
+  border-color: rgba(255, 255, 255, 0.3);
 
   transition: transform 500ms;
   transition-timing-function: cubic-bezier(0.15, 0.1, 0.25, 1);
+}
+
+.action:enabled {
+  background-color: rgb(106, 160, 248);
+  color: rgb(255, 255, 255);
+  border: 1px solid white;
 }
